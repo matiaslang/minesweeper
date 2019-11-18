@@ -83,7 +83,7 @@ def timeCounter(t):
     tila["time"] = tila["time"] + t
     if tila["end"] == 1:
         tila["timeOut"] = tila["timeOut"] + t
-    if tila["timeOut"] > 3:
+    if tila["timeOut"] > 2:
         haravasto.lopeta()   
 
 def handleClick(x, y, button, modKey):
@@ -174,7 +174,7 @@ def main(width, height, mineQnt):
     for x in range(height):
         for y in range(width):
             jaljella.append((x, y))
-            
+
     mineService.miinoita(tila["board"], jaljella, mineQnt) 
     haravasto.luo_ikkuna(width * SQSIZE, height * SQSIZE)
     haravasto.piirra_tausta()

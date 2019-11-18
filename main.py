@@ -4,6 +4,8 @@ from os import system, name
 """
 Main file for minesweeper function
 
+@TODO have to fix the Segmentation fault: 11 -issue which occurs while closing with x-button 
+
 """
 
 def print_stars():
@@ -29,9 +31,14 @@ def ask_numbers(question, error):
     @return: return a number value which passes the rules
     """
     while True:
+        value = 0
         try:
             value = int(input(question))
         except ValueError:
+            print(error)
+        except UnboundLocalError:
+            print(error)
+        except Exception:
             print(error)
         if value <= 0:
             print("Syötä positiivinen luku, joka on suurempi kuin 0\n->")
@@ -49,12 +56,14 @@ def mineSweeper():
     @returns: duration of the game, size of the table game was played, win/loss(0 = loss 1 = win) and moves it took
 
     """
+    clear()
     size_x = ask_numbers("Syötä kentän leveys ruuduissa\n->", "Syötä luku joka on suurempi kuin 0.\n->")
     size_y = ask_numbers("Syötä kentän korkeus ruuduissa\n->", "Syötä luku joka on suurempi kuin 0.\n->")
     mineQnt = ask_numbers("Syötä miinojen lukumäärä\n->", "Syötä luku joka on suurempi kuin 0.\n->") 
     while mineQnt > (size_x * size_y - 1):
         print("Syötä miinojen lukumäärä siten, että ne mahtuvat kentälle(Max {} kpl)". format(size_x * size_y - 1))
         mineQnt = ask_numbers("Syötä miinojen lukumäärä\n->", "Syötä luku joka on suurempi kuin 0.\n->") 
+    print("aloitetaan peli kentällä, jonka koko on {} x {}, \nja laudalta löytyy piilotettuna {} miinaa".format(size_x, size_y, mineQnt))
     duration, result, moves = drawingService.main(size_x, size_y, mineQnt)
     return duration, size_x, size_y, result, moves
 
@@ -71,13 +80,15 @@ def main():
     print_stars()
     print("\n")
     while True:
-        choice = ask_numbers("Valitse seuraavista: \n1. Aloita uusi peli\n2. Katsele tilastoja\n3. Lopeta Ohjelma\n\n->", "Syötä jokin seuraavista: \n        1 | 2 | 3\n->")
-        while choice > 4 or choice <= 0:
+        choice = ask_numbers("Valitse seuraavista: \n1. Aloita uusi peli\n2. Katsele tilastoja\n3. Lopeta Ohjelma\n\n->", "Hupsis, nyt meni pieleen. Kokeile syöttää numero joka on välillä 1-3\n\n")
+        while choice >= 3 or choice <= 0:
                 print("Syötä jokin seuraavista: \n        1 | 2 | 3")  
-                choice = ask_numbers("Valitse seuraavista: \n1. Aloita uusi peli\n2. Katsele tilastoja\n3. Lopeta Ohjelma\n\n->", "Syötä jokin seuraavista: \n        1 | 2 | 3\n->")
+                choice = ask_numbers("Valitse seuraavista: \n1. Aloita uusi peli\n2. Katsele tilastoja\n3. Lopeta Ohjelma\n\n->", "Hupsis, nyt meni pieleen. Kokeile syöttää numero joka on välillä 1-3\n\n")
         if choice == 1:
-            duration, kentan_x, kentan_y, result, moves = mineSweeper()
-            fileService.writeRecords(duration, kentan_x, kentan_y, result, moves)
+            try:
+                duration, kentan_x, kentan_y, result, moves = mineSweeper()
+                fileService.writeRecords(duration, kentan_x, kentan_y, result, moves)
+            except 
         elif choice == 2:
             fileService.readRecords()
         else:
