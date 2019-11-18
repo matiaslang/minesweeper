@@ -167,14 +167,15 @@ def main(width, height, mineQnt):
     for rivi in range(height):
         board.append([])
         for sarake in range(width): 
-            board
-    [-1].append(" ")
+            board[-1].append(" ")
     tila["board"] = board
     
     jaljella = []
     for x in range(height):
         for y in range(width):
             jaljella.append((x, y))
+
+    print(tila["board"])
 
     mineService.miinoita(tila["board"], jaljella, mineQnt) 
     haravasto.luo_ikkuna(width * SQSIZE, height * SQSIZE)

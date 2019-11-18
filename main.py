@@ -53,7 +53,7 @@ def mineSweeper():
     size_y = ask_numbers("Syötä kentän korkeus ruuduissa\n->", "Syötä luku joka on suurempi kuin 0.\n->")
     mineQnt = ask_numbers("Syötä miinojen lukumäärä\n->", "Syötä luku joka on suurempi kuin 0.\n->") 
     while mineQnt > (size_x * size_y - 1):
-        print("Syötä miinojen lukumäärä siten, että ne mahtuvat kentälle(Max {} kpl)". format(kentan_x * kentan_y - 1))
+        print("Syötä miinojen lukumäärä siten, että ne mahtuvat kentälle(Max {} kpl)". format(size_x * size_y - 1))
         mineQnt = ask_numbers("Syötä miinojen lukumäärä\n->", "Syötä luku joka on suurempi kuin 0.\n->") 
     duration, result, moves = drawingService.main(size_x, size_y, mineQnt)
     return duration, size_x, size_y, result, moves
