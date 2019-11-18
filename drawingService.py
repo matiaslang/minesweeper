@@ -174,9 +174,7 @@ def main(width, height, mineQnt):
     for x in range(height):
         for y in range(width):
             jaljella.append((x, y))
-
-    print(tila["board"])
-
+            
     mineService.miinoita(tila["board"], jaljella, mineQnt) 
     haravasto.luo_ikkuna(width * SQSIZE, height * SQSIZE)
     haravasto.piirra_tausta()
