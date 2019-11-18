@@ -1,6 +1,11 @@
 import random
 import main
 
+"""
+File which handles all the mechanics of the game. Functions were written by me before,
+and thats why the descriptions are in Finnish.
+"""
+
 def laske_ninjat(x, y, lista):
     """
     Laskee annetussa huoneessa yhden ruudun ympärillä olevat ninjat ja palauttaa
@@ -26,35 +31,31 @@ def laske_ninjat(x, y, lista):
     return ninjat
 
 def tulvataytto(planeetta, x, y):
-    """
-    Merkitsee planeetalla olevat tuntemattomat alueet turvalliseksi siten, että
-    täyttö aloitetaan annetusta x, y -pisteestä.
-    """
-    leveys = len(planeetta[1])
-    korkeus = len(planeetta)
-    lista = [(x, y)]
-    i = 0
-    flag = 1
-    while flag:
-        numero = lista.pop(-1)
-        a_x = numero[0] - 1
-        a_y = numero[1] - 1 
-        for i in range(3):
-            if a_y >= 0 and a_y < korkeus:
-                for j in range(3):
-                    if a_x >= 0 and a_x < leveys:
-                        if planeetta[a_y][a_x] == ' ':
-                            minesNextTo = laske_ninjat(a_x, a_y, planeetta)
-                            planeetta[a_y][a_x] = minesNextTo
-                            numToAdd = (a_x, a_y)
-                            lista.append(numToAdd)
-                        if planeetta[a_y][a_x] == 'x' or len(lista) == 0:
-                            flag = 0
-                    a_x += 1
-            a_x = numero[0] - 1
-            a_y += 1
-    return planeetta
-        
+   """
+   Merkitsee planeetalla olevat tuntemattomat alueet turvalliseksi siten, että
+   täyttö aloitetaan annetusta x, y -pisteestä.
+   """
+   leveys = len(planeetta[1])
+   korkeus = len(planeetta)
+   lista = [(x, y)]
+   while lista:
+       numero = lista.pop(-1)
+       a_x = numero[0] - 1
+       a_y = numero[1] - 1
+       for i in range(3):
+           if a_y >= 0 and a_y < korkeus:
+               for j in range(3):
+                   if a_x >= 0 and a_x < leveys:
+                       if planeetta[a_y][a_x] == ' ':
+                           minesNextTo = laske_ninjat(a_x, a_y, planeetta)
+                           planeetta[a_y][a_x] = minesNextTo
+                           numToAdd = (a_x, a_y)
+                           if minesNextTo == 0:
+                               lista.append(numToAdd)
+                   a_x += 1
+           a_x = numero[0] - 1
+           a_y += 1
+   return planeetta
 
 
 def miinoita(kentta, availableSpots, mineQt):
